@@ -14,5 +14,17 @@
             "email": "cirelhromeo@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^10.0 || ^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cirel\\LaravelBasicsAuxs\\LaravelBasicsAuxsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
