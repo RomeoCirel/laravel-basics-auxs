@@ -1,5 +1,4 @@
 <?php
-
 namespace Cirel\LaravelBasicsAuxs;
 
 use Illuminate\Support\ServiceProvider;
@@ -18,9 +17,14 @@ class LaravelBasicsAuxsServiceProvider extends ServiceProvider
             __DIR__ . '/Auxs/' => app_path('Auxs'),
             __DIR__ . '/Traits/' => app_path('Traits'),
             __DIR__ . '/Handlers/' => app_path('Exceptions'),
-            __DIR__ . 'Http/Requests/' => app_path('Http/Requests'),
+            __DIR__ . '/Http/Requests/' => app_path('Http/Requests'),
         ], 'laravel-basics-auxs');
 
-        $filesystem->copy(__DIR__ . '/Handlers/InvalidJsonResponseHandler.php', app_path('Exceptions/Handler.php'));
+        $exceptionsPath = app_path('Exceptions');
+        if (!$filesystem->exists($exceptionsPath)) {
+            $filesystem->makeDirectory($exceptionsPath, 0755, true);
+        }
+
+        $filesystem->copy(__DIR__ . '/Handlers/InvalidJsonResponseHandler.php', $exceptionsPath . '/InvalidJsonResponseHandler.php');
     }
 }
