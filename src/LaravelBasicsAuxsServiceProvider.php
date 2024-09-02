@@ -21,6 +21,6 @@ class LaravelBasicsAuxsServiceProvider extends ServiceProvider
             __DIR__ . 'Http/Requests/' => app_path('Http/Requests'),
         ], 'laravel-basics-auxs');
 
-        $filesystem->copy(__DIR__ . '/Handlers/CustomExceptionHandler.php', app_path('Exceptions/Handler.php'));
+        $filesystem->copy(__DIR__ . '/Handlers/InvalidJsonResponseHandler.php', app_path('Exceptions/Handler.php'));
     }
 }
