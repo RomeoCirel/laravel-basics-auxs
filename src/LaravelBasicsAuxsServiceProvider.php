@@ -8,23 +8,33 @@ class LaravelBasicsAuxsServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // Aquí puedes registrar cualquier binding en el contenedor de servicios
+        // nada por aqui
     }
 
     public function boot(Filesystem $filesystem)
     {
-        $this->publishes([
-            __DIR__ . '/Auxs/' => app_path('Auxs'),
-            __DIR__ . '/Traits/' => app_path('Traits'),
-            __DIR__ . '/Handlers/' => app_path('Exceptions'),
-            __DIR__ . '/Http/Requests/' => app_path('Http/Requests'),
-        ], 'laravel-basics-auxs');
 
-        $exceptionsPath = app_path('Exceptions');
-        if (!$filesystem->exists($exceptionsPath)) {
-            $filesystem->makeDirectory($exceptionsPath, 0755, true);
+        $paths = [
+            'Auxs' => app_path('Auxs'),
+            'Traits' => app_path('Traits'),
+            'Handlers' => app_path('Exceptions'),
+            'Requests' => app_path('Http/Requests'),
+        ];
+
+        foreach ($paths as $key => $path) {
+            if (!$filesystem->exists($path)) {
+                $filesystem->makeDirectory($path, 0755, true);
+            }
         }
 
-        $filesystem->copy(__DIR__ . '/Handlers/InvalidJsonResponseHandler.php', $exceptionsPath . '/InvalidJsonResponseHandler.php');
+        $this->publishes([
+            __DIR__ . '/Auxs/' => $paths['Auxs'],
+            __DIR__ . '/Traits/' => $paths['Traits'],
+            __DIR__ . '/Handlers/' => $paths['Handlers'],
+            __DIR__ . '/Http/Requests/' => $paths['Requests'],
+        ], 'laravel-basics-auxs');
+
+
+        $filesystem->copy(__DIR__ . '/Handlers/InvalidJsonResponseHandler.php', $paths['Handlers'] . '/InvalidJsonResponseHandler.php');
     }
 }
